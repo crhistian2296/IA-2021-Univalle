@@ -36,63 +36,63 @@ class CleanerProblem extends Problem {
     update(data, action, agentID) {
         let map = data.world;
         let agentState = data.states[agentID];
-        let ratonX = JSON.stringify(agentState.raton.x);
-        let ratonY = JSON.stringify(agentState.raton.y);
-        let quesoX = JSON.stringify(agentState.queso.x);
-        let quesoY = JSON.stringify(agentState.queso.y);
+        let ratonX = Number(JSON.stringify(agentState.raton.x));
+        let ratonY = Number(JSON.stringify(agentState.raton.y));
+        let quesoX = Number(JSON.stringify(agentState.queso.x));
+        let quesoY = Number(JSON.stringify(agentState.queso.y));
 
         //Accion arriba, camino mas corto arriba
         if (
             action == "UP" &&
-            Math.abs(quesoY - ratonY--) < Math.abs(quesoY - ratonY++)
+            Math.abs(quesoY - --ratonY) < Math.abs(quesoY - ++ratonY)
         ) {
             agentState.raton.y -= 1;
         }
         //Accion arriba, camino mas corto abajo
         if (
             action == "UP" &&
-            Math.abs(quesoY - ratonY--) > Math.abs(quesoY - ratonY++)
+            Math.abs(quesoY - ++ratonY) > Math.abs(quesoY - ++ratonY)
         ) {
             agentState.raton.y += 1;
         }
         //Accion abajo, camino más corto abajo
         if (
             action == "DOWN" &&
-            Math.abs(quesoY - ratonY++) < Math.abs(quesoY - ratonY--)
+            Math.abs(quesoY - --ratonY) < Math.abs(quesoY - ++ratonY)
         ) {
             agentState.raton.y += 1;
         }
         //Accion abajo, camino más corto arriba
         if (
             action == "DOWN" &&
-            Math.abs(quesoY - ratonY++) > Math.abs(quesoY - ratonY--)
+            Math.abs(quesoY - --ratonY) > Math.abs(quesoY - ++ratonY)
         ) {
             agentState.raton.y -= 1;
         }
         //Accion izquierda, camino más corto izquierda
         if (
             action == "LEFT" &&
-            Math.abs(quesoX - ratonX--) < Math.abs(quesoX - ratonX++)
+            Math.abs(quesoX - --ratonX) < Math.abs(quesoX - ++ratonX)
         ) {
             agentState.raton.x -= 1;
         }
         //Accion izquierda, camino mas corto derecha
         if (
             action == "LEFT" &&
-            Math.abs(quesoX - ratonX--) > Math.abs(quesoX - ratonX++)
+            Math.abs(quesoX - --ratonX) > Math.abs(quesoX - ++ratonX)
         ) {
             agentState.raton.x += 1;
         }
         if (
             action == "RIGHT" &&
-            Math.abs(quesoX - ratonX++) < Math.abs(quesoX - ratonX--)
+            Math.abs(quesoX - ++ratonX) < Math.abs(quesoX - --ratonX)
         ) {
             agentState.raton.x += 1;
         }
         //Accion derecha, camino mas corto derecha
         if (
             action == "RIGHT" &&
-            Math.abs(quesoX - ratonX++) > Math.abs(quesoX - ratonX--)
+            Math.abs(quesoX - ++ratonX) > Math.abs(quesoX - --ratonX)
         ) {
             agentState.raton.x -= 1;
         }
