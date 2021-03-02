@@ -43,15 +43,13 @@ class CleanerProblem extends Problem {
         this.memory.push(action);
 
         if (action == "DOWN" && lastAction == "UP") action = "UP";
-        if (action == "DOWN") agentState.y += 1;
-
         if (action == "LEFT" && lastAction == "RIGHT") action = "RIGHT";
-        if (action == "LEFT" && lastAction != "RIGHT") agentState.x -= 1;
-
         if (action == "UP" && lastAction == "DOWN") action = "UP";
-        if (action == "UP" && lastAction != "DOWN") agentState.y -= 1;
-
         if (action == "RIGHT" && lastAction == "LEFT") action = "LEFT";
+
+        if (action == "DOWN") agentState.y += 1;
+        if (action == "LEFT" && lastAction != "RIGHT") agentState.x -= 1;
+        if (action == "UP" && lastAction != "DOWN") agentState.y -= 1;
         if (action == "RIGHT" && lastAction != "LEFT") agentState.x += 1;
 
         if (action == "TAKE") map[agentState.y][agentState.x] = 0;
