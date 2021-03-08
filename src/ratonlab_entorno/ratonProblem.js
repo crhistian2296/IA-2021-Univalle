@@ -44,13 +44,14 @@ class CleanerProblem extends Problem {
 
         if (action == "DOWN" && lastAction == "UP") action = "UP";
         if (action == "LEFT" && lastAction == "RIGHT") action = "RIGHT";
-        if (action == "UP" && lastAction == "DOWN") action = "UP";
+        if (action == "UP" && lastAction == "DOWN") action = "DOWN";
         if (action == "RIGHT" && lastAction == "LEFT") action = "LEFT";
 
         if (action == "DOWN") agentState.y += 1;
-        if (action == "LEFT" && lastAction != "RIGHT") agentState.x -= 1;
-        if (action == "UP" && lastAction != "DOWN") agentState.y -= 1;
-        if (action == "RIGHT" && lastAction != "LEFT") agentState.x += 1;
+        if (action == "LEFT") agentState.x -= 1;
+        if (action == "UP") agentState.y -= 1;
+        if (action == "RIGHT") agentState.x += 1;
+        console.log(agentState);
 
         if (action == "TAKE") map[agentState.y][agentState.x] = 0;
 

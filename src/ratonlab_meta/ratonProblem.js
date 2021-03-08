@@ -7,6 +7,7 @@ class CleanerProblem extends Problem {
     constructor(args) {
         super(args);
         this.env = args;
+        this.memory = [];
     }
 
     /**
@@ -23,6 +24,11 @@ class CleanerProblem extends Problem {
         return false;
     }
 
+    manhatanDistance(ratX, ratY, cheeseX, cheeseY) {
+        let distance = (cheeseX - ratX) + (cheeseY - ratY)
+        return distance
+    }
+
     /**
      * The transition model.
      * Tells how to change the state (data) based on the given actions. You must override
@@ -31,7 +37,7 @@ class CleanerProblem extends Problem {
      * or the current cell if the action is TAKE
      * @param {} data
      * @param {*} action
-     * @param {*} agentID
+     * @param {*} agentID//dlsfjsd
      */
     update(data, action, agentID) {
         let map = data.world;
@@ -40,71 +46,101 @@ class CleanerProblem extends Problem {
         let ratonY = Number(JSON.stringify(agentState.raton.y));
         let quesoX = Number(JSON.stringify(agentState.queso.x));
         let quesoY = Number(JSON.stringify(agentState.queso.y));
+        let lastAction = this.memory[this.memory.length - 1];
+
+        this.memory.push(action);
+        //add last action to memory arr
+
+        //Para que mantenga la direccion sin devolverse
+        if ((Math.abs(quesoY - --ratonY) + Math.abs(quesoX - ratonX)) > (Math.abs(quesoY - ++ratonY) + Math.abs(quesoX - ratonX)))
+            action = 'DOWN'
+
+        if ((Math.abs(quesoY - --ratonY) + Math.abs(quesoX - ratonX)) < (Math.abs(quesoY - ++ratonY) + Math.abs(quesoX - ratonX)))
+            action = 'UP'
+
+        if ((Math.abs(quesoY - ratonY) + Math.abs(quesoX - --ratonX)) > (Math.abs(quesoY - ratonY) + Math.abs(quesoX - ++ratonX)))
+            action = 'RIGHT'
+
+        if ((Math.abs(quesoY - ratonY) + Math.abs(quesoX - --ratonX)) < (Math.abs(quesoY - ratonY) + Math.abs(quesoY - ratonY)))
+            action = 'LEFT'
+
+
+        if (action == "DOWN" && lastAction == "UP") action = "UP";
+        if (action == "LEFT" && lastAction == "RIGHT") action = "RIGHT";
+        if (action == "UP" && lastAction == "DOWN") action = "DOWN";
+        if (action == "RIGHT" && lastAction == "LEFT") action = "LEFT";
+
 
         //Accion arriba, camino mas corto arriba
-        if (
-            action == "UP" &&
-            Math.abs(quesoY - --ratonY) < Math.abs(quesoY - ++ratonY)
-        ) {
+        if (action == "UP")
             agentState.raton.y -= 1;
-        }
-        //Accion arriba, camino mas corto abajo
-        if (
-            action == "UP" &&
-            Math.abs(quesoY - ++ratonY) > Math.abs(quesoY - ++ratonY)
-        ) {
-            agentState.raton.y += 1;
-        }
+
+
         //Accion abajo, camino más corto abajo
-        if (
-            action == "DOWN" &&
-            Math.abs(quesoY - --ratonY) < Math.abs(quesoY - ++ratonY)
-        ) {
+        if (action == "DOWN")
             agentState.raton.y += 1;
-        }
-        //Accion abajo, camino más corto arriba
-        if (
-            action == "DOWN" &&
-            Math.abs(quesoY - --ratonY) > Math.abs(quesoY - ++ratonY)
-        ) {
-            agentState.raton.y -= 1;
-        }
+
+
         //Accion izquierda, camino más corto izquierda
-        if (
-            action == "LEFT" &&
-            Math.abs(quesoX - --ratonX) < Math.abs(quesoX - ++ratonX)
-        ) {
+        if (action == "LEFT")
             agentState.raton.x -= 1;
-        }
-        //Accion izquierda, camino mas corto derecha
-        if (
-            action == "LEFT" &&
-            Math.abs(quesoX - --ratonX) > Math.abs(quesoX - ++ratonX)
-        ) {
-            agentState.raton.x += 1;
-        }
-        if (
-            action == "RIGHT" &&
-            Math.abs(quesoX - ++ratonX) < Math.abs(quesoX - --ratonX)
-        ) {
-            agentState.raton.x += 1;
-        }
+
         //Accion derecha, camino mas corto derecha
-        if (
-            action == "RIGHT" &&
-            Math.abs(quesoX - ++ratonX) > Math.abs(quesoX - --ratonX)
-        ) {
-            agentState.raton.x -= 1;
+
+        if (action == "RIGHT")
+            agentState.raton.x += 1;
+
+
+        /* if (action == "DOWN" && lastAction == "UP") action = "UP";
+        if (action == "DOWN" && lastAction != "UP") {
+            if (Math.abs(quesoY - --ratonY) >= Math.abs(quesoY - ++ratonY)) {
+                agentState.raton.y += 1;
+            } else {
+                action = "UP"
+            }
         }
-        if (action == "TAKE") {
+
+        if (action == "LEFT" && lastAction == "RIGHT") action = "RIGHT";
+        if (action == "LEFT" && lastAction != "RIGHT") {
+            if (Math.abs(quesoX - --ratonX) >= Math.abs(quesoX - ++ratonX)) {
+                agentState.raton.x -= 1;
+            } else {
+                action = "RIGHT"
+            }
+        }
+
+        if (action == "UP" && lastAction == "DOWN") action = "UP";
+        if (action == "UP" && lastAction != "DOWN") {
+            if (Math.abs(quesoY - --ratonY) <= Math.abs(quesoY - ++ratonY)) {
+                agentState.raton.y -= 1;
+            } else {
+                action = "DOWN"
+            }
+        }
+
+        if (action == "RIGHT" && lastAction == "LEFT") action = "LEFT";
+        if (action == "RIGHT" && lastAction != "LEFT") {
+            if (Math.abs(quesoX - --ratonX) <= Math.abs(quesoX - ++ratonX)) {
+                agentState.raton.x += 1;
+            } else {
+                action = "LEFT"
+            }
+        } */
+
+        console.log(agentState.raton);
+
+        if (action == "TAKE")
             map[agentState.raton.y][agentState.raton.x] = 0;
-        }
-        if (!data.iterations) {
+
+        if (!data.iterations)
             data.iterations = 1;
-        } else {
+        else
             data.iterations++;
-        }
+
+
+        console.log('ultima accion =>', lastAction);
     }
+
 
     /**
      * Gives the world representation for the agent at the current stage.
@@ -134,10 +170,6 @@ class CleanerProblem extends Problem {
         result.push(Math.abs(map[y][x]));
 
         // Pasar la información sobre donde está el queso
-        result.push(agentState.raton.x);
-        result.push(agentState.raton.y);
-        result.push(agentState.queso.x);
-        result.push(agentState.queso.y);
 
         return result;
     }

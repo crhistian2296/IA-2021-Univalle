@@ -34,6 +34,7 @@ class CleanerAgent extends Agent {
      */
     send() {
         let viewKey = this.perception.join();
+        console.log(viewKey);
         //let action = foo(this.internalState, this.perception)
         //this.internalState = updatex(this.internalState, this.perception, action)
         //return action;

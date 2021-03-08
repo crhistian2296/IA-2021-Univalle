@@ -1,9 +1,20 @@
 const RatonProblem = require('./ratonProblem');
 const RatonAgent = require('./ratonAgent');
 
-let myProblem = new RatonProblem({ maxIterations: 100 });
+let myProblem = new RatonProblem({
+    maxIterations: 100
+});
 
-myProblem.addAgent("Smith", RatonAgent, {raton: { x: 1, y: 7 }, queso: {x: 6, y: 6}});
+myProblem.addAgent("Smith", RatonAgent, {
+    raton: {
+        x: 1,
+        y: 7
+    },
+    queso: {
+        x: 6,
+        y: 6
+    }
+});
 myProblem.solve([
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 1],
@@ -38,5 +49,7 @@ myProblem.solve([
         else
             console.log("Agent could solve this problem :)")
     },
-    onTurn: (result) => { console.log("Turn: " + JSON.stringify(result.actions[result.actions.length - 1])) }
+    onTurn: (result) => {
+        console.log("Turn: " + JSON.stringify(result.actions[result.actions.length - 1]))
+    }
 });

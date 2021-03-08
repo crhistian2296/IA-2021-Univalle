@@ -41,11 +41,7 @@ class CleanerAgent extends Agent {
     send() {
         //this.perception = [LEFT, UP, RIGHT, DOWN, SMELL, ratonx, ratony, qx, qy]
 
-        let ratonX = this.perception[6];
-        let ratonY = this.perception[7];
-        let quesoX = this.perception[8];
-        let quesoY = this.perception[9];
-        let viewKey = this.perception.slice(0, 5).join();
+        let viewKey = this.perception.slice(0, 5).join(',');
         console.log(viewKey);
         //let action = foo(this.internalState, this.perception)
         //this.internalState = updatex(this.internalState, this.perception, action)
