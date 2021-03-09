@@ -26,6 +26,18 @@ class CleanerAgent extends Agent {
             "1,1,1,0,0": "DOWN",
             default: "TAKE",
         };
+        this.mapa=Array.from(Array(20), ()=> new Array(20));
+        for(let i=0;i<20;i++){
+            for(let j=0;j<20;j++){
+                this.mapa[i][j]=0;
+            }
+        }
+    }
+
+    setup(state0) {
+        this.x = state0.x;
+        this.y = state0.y;
+        this.mapa;
     }
 
     /**
@@ -38,7 +50,7 @@ class CleanerAgent extends Agent {
         //let action = foo(this.internalState, this.perception)
         //this.internalState = updatex(this.internalState, this.perception, action)
         //return action;
-
+        this.mapa[this.y][this.x]++;
         if (this.table[viewKey]) {
             return this.table[viewKey];
         } else {

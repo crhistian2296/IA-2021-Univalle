@@ -65,10 +65,14 @@ class CleanerProblem extends Problem {
             action = 'LEFT'
 
 
-        if (action == "DOWN" && lastAction == "UP") action = "UP";
-        if (action == "LEFT" && lastAction == "RIGHT") action = "RIGHT";
-        if (action == "UP" && lastAction == "DOWN") action = "DOWN";
-        if (action == "RIGHT" && lastAction == "LEFT") action = "LEFT";
+        if (action == "DOWN" && lastAction == "UP") 
+            action = "UP";
+        if (action == "LEFT" && lastAction == "RIGHT") 
+            action = "RIGHT";
+        if (action == "UP" && lastAction == "DOWN") 
+            action = "DOWN";
+        if (action == "RIGHT" && lastAction == "LEFT") 
+            action = "LEFT";
 
 
         //Accion arriba, camino mas corto arriba

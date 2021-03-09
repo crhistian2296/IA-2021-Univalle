@@ -41,7 +41,7 @@ class CleanerProblem extends Problem {
         let lastAction = this.memory[this.memory.length - 1];
         //add last action to memory arr
         this.memory.push(action);
-
+        /*
         if (action == "DOWN" && lastAction == "UP") action = "UP";
         if (action == "LEFT" && lastAction == "RIGHT") action = "RIGHT";
         if (action == "UP" && lastAction == "DOWN") action = "DOWN";
@@ -54,7 +54,22 @@ class CleanerProblem extends Problem {
         console.log(agentState);
 
         if (action == "TAKE") map[agentState.y][agentState.x] = 0;
-
+        */
+        if (action == "UP") {
+            agentState.y -= 1;
+        }
+        if (action == "DOWN") {
+            agentState.y += 1;
+        }
+        if (action == "LEFT") {
+            agentState.x -= 1;
+        }
+        if (action == "RIGHT") {
+            agentState.x += 1;
+        }
+        if (action == "TAKE") {
+            map[agentState.y][agentState.x] = 0;
+        }
         if (!data.interations) data.interations = 1;
         else data.interations++;
 
@@ -73,7 +88,80 @@ class CleanerProblem extends Problem {
         let agentState = data.states[agentID];
         let x = agentState.x;
         let y = agentState.y;
+        let mapa=agentState.mapa;
         let result = [];
+
+        if(typeof mapa == 'undefined'){
+            console.log('mapa no definido');
+            agentState.mapa=Array.from(Array(1000), ()=> new Array(1000));
+            for(var i=0;i<1000;i++){
+                for(var j=0;j<1000;j++){
+                    agentState.mapa[i][j]=0;
+                }
+            }
+        }
+
+        agentState.mapa[y][x]++;
+
+        let resultTemp = [];
+        let min,n;
+
+        //LEFT
+        if(x>0){
+            if(map[y][x-1] ==1){
+                agentState.mapa[y][x-1]=1000;
+            }
+            resultTemp.push(agentState.mapa[y][x-1])
+        }else{
+            resultTemp.push(1000);
+        }
+
+        //UP
+        if(y>0){
+            if(map[y-1][x] ==1){
+                agentState.mapa[y-1][x]=1000;
+            }
+            resultTemp.push(agentState.mapa[y-1][x])
+        }else{
+            resultTemp.push(1000);
+        }
+        //RIGHT
+        if(x< map[0].length -1){
+            if(map[y][x+1]==1){
+                agentState.mapa[y][x+1]=1000;
+            }
+            resultTemp.push(agentState.mapa[y][x+1]);
+        }else{
+            resultTemp.push(1000);
+        }
+        //DOWN
+        if(y< map.length -1){
+            if(map[y+1][x]==1){
+                agentState.mapa[y+1][x]=1000;
+            }
+            resultTemp.push(agentState.mapa[y+1][x]);
+        }else{
+            resultTemp.push(1000);
+        }
+
+        n=0;
+        min=resultTemp[n];
+        for(let i=0;i<resultTemp.length;i++){
+            if(resultTemp[i]<min){
+                n=i;
+                min=resultTemp[i];
+            }
+        }
+
+        for(let i=0;i<resultTemp.length;i++){
+            if(resultTemp[i]==min){
+                result.push(0);
+            }else{
+                result.push(1);
+            }
+        }
+
+        /*
         //LEFT
         result.push(x > 0 ? map[y][x - 1] : 1);
         //UP
@@ -82,7 +170,7 @@ class CleanerProblem extends Problem {
         result.push(x < map[0].length - 1 ? map[y][x + 1] : 1);
         //DOWN
         result.push(y < map.length - 1 ? map[y + 1][x] : 1);
-
+        */
         result = result.map((value) => (value > 0 ? 1 : 0));
 
         //SMELL
