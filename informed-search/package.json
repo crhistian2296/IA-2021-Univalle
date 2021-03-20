@@ -1,0 +1,14 @@
+{
+  "name": "busquedas",
+  "version": "0.0.1",
+  "description": "Implementación de los algoritmos de búsqueda no informada",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "andcastillo",
+  "license": "MIT",
+  "dependencies": {
+    "simple-hashtable": "^1.0.0"
+  }
+}

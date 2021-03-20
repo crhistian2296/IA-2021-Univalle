@@ -1,0 +1,12 @@
+INTEGRANTES:
+Crhistian Alexander Garcia Urbano 1832124
+Juan Diego Fandiño Urrego 1810037
+Juan Camilo Sánchez Barreiro 1527749
+
+Para ejecutar el primer punto del taller debe escribir el comando:
+node src/ratonlab_simple/main1.js
+
+para ejecutar el segundo punto:
+node src/ratonlab_entorno/main2.js
+
+*todos los comandos deben hacerse en el directorio IA-2021
