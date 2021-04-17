@@ -9,23 +9,30 @@ function removeFromQueue(queue) {
 
 function bfs(problem) {
     let nodoRaiz = {
-        value: '',
+        value: problem.constantes.start,
         actions: '',
-        level: 0
+        level: 0,
+        boxes: problem.constantes.boxes,
+        map: problem.constantes.map
     };
 
+    //console.log(problem.constantes.boxes);
     let cola = [];
     cola = [nodoRaiz];
-    while (cola.length != 0) {
-        //console.log(cola);
-        if (cola.length == 0) {
-            return 'Error';
-        }
+    while (cola[0].level < 4){//(cola.length != 0) { //
         //console.log(cola);
         let nodoExpandido = removeFromQueue(cola);
+        console.log(nodoExpandido);
+        /* console.log(nodoExpandido.actions);
+        console.log(nodoExpandido.value);
+        console.log(nodoExpandido.boxes);
+        console.log(nodoExpandido.map);
+        console.log(nodoExpandido.map[nodoExpandido.value.x][nodoExpandido.value.y]);
+        console.log('------');  */
+        
         if (problem.isSolution(nodoExpandido, problem.constantes)) {
             console.log(nodoExpandido.actions)
-            return 'Es meta el nodo '+nodoExpandido.actions+' nivel '+nodoExpandido.level;
+            return 'Es meta el nodo ' + nodoExpandido.actions + ' nivel ' + nodoExpandido.level;
         } else {
             addToQueue(cola, problem.getChildren(nodoExpandido, problem.constantes));
         }
