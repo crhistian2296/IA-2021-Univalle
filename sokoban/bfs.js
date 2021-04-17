@@ -19,10 +19,10 @@ function bfs(problem) {
     //console.log(problem.constantes.boxes);
     let cola = [];
     cola = [nodoRaiz];
-    while (cola[0].level < 4){//(cola.length != 0) { //
+    while (cola[0].actions.length < 60){//(cola.length != 0) { //(cola[0].level < 4){//
         //console.log(cola);
         let nodoExpandido = removeFromQueue(cola);
-        console.log(nodoExpandido);
+        //console.log(nodoExpandido.actions);
         /* console.log(nodoExpandido.actions);
         console.log(nodoExpandido.value);
         console.log(nodoExpandido.boxes);
@@ -37,7 +37,7 @@ function bfs(problem) {
             addToQueue(cola, problem.getChildren(nodoExpandido, problem.constantes));
         }
     }
-
+    return 'no se encontró solución'
 }
 
 module.exports = bfs;
