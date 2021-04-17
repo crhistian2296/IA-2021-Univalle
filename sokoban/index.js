@@ -13,8 +13,8 @@ const costs = [1, 1, 1, 1];
 //let nodo = {value: {x: 2, y: 6}, actions: 'RU', level: 2};
 
 function isSolution(nodo, constantes) {
-    let solution = constantes.solution;
-    let boxes = nodo.boxes;
+    var solution = constantes.solution;
+    var boxes = nodo.boxes;
     let contador = 0; //si es solucion, al final debe ser igual al tamaño de boxes
     for (let i = 0; i < boxes.length; i++) {
         for (let j = 0; j < boxes.length; j++) {
@@ -33,108 +33,97 @@ function isSolution(nodo, constantes) {
 
 function getChildren(nodo, constantes) {
     let map = nodo.map;
-    let m1 = map.map(arr => { return arr.slice() })
-    let m2 = map.map(arr => { return arr.slice() }) //copias del array para que no modifique por referencia
-    let m3 = map.map(arr => { return arr.slice() })
-    let m4 = map.map(arr => { return arr.slice() })
+
+
+
     let children = [];
     let boxes = nodo.boxes;
-    let box1 = boxes.map(obj => { return {...obj} })
-    let box2 = boxes.map(obj => { return {...obj} })
-    let box3 = boxes.map(obj => { return {...obj} })
-    let box4 = boxes.map(obj => { return {...obj} })
-    // Up
-    if (nodo.value.y >= 1 && map[nodo.value.y - 1][nodo.value.x] != 'W') {
-        //if (map[nodo.value.y - 2][nodo.value.x] != 'W' && map[nodo.value.y - 2][nodo.value.x] != 'C' && map[nodo.value.y - 1][nodo.value.x] == 'C') {
-        if (map[nodo.value.y - 1][nodo.value.x] == 'C' && (map[nodo.value.y - 2][nodo.value.x] == '0' || map[nodo.value.y - 2][nodo.value.x] == 'X')) {
-            //logica para modificar las posiciones de las cajas en la variable boxes
-            let y = nodo.value.y - 1;
-            let x = nodo.value.x;
-            let posboxold = {};
-            let posboxnew = {};
 
+
+
+
+    // Up
+    if (nodo.value.x >= 1 && map[nodo.value.x - 1][nodo.value.y] != 'W') {
+        //if (map[nodo.value.y - 2][nodo.value.x] != 'W' && map[nodo.value.y - 2][nodo.value.x] != 'C' && map[nodo.value.y - 1][nodo.value.x] == 'C') {
+        if (map[nodo.value.x - 1][nodo.value.y] == 'C' && (map[nodo.value.x - 2][nodo.value.y] == '0' || map[nodo.value.x - 2][nodo.value.y] == 'X')) {
+            //logica para modificar las posiciones de las cajas en la variable boxes
+            let m1 = map.map(arr => { return arr.slice() }) //copias del array para que no modifique por referencia
+            let box1 = boxes.map(obj => { return { ...obj } })
 
             for (let i = 0; i < box1.length; i++) {
-                if (box1[i].y == y && box1[i].x == x) {
-                    posboxold = { x: box1[i].x, y: box1[i].y }
-                    posboxnew = { x: box1[i].x, y: box1[i].y - 1 }
-                    box1[i].y--;
+                if (box1[i].y == nodo.value.y && box1[i].x == nodo.value.x - 1) {
+                    box1[i].x--;
                     //let aux = m[posboxnew.y][posboxnew.x];
-                    m1[posboxnew.y][posboxnew.x] = 'C';
-                    m1[posboxold.y][posboxold.x] = '0';
+                    m1[nodo.value.x - 2][nodo.value.y] = 'C';
+                    m1[nodo.value.x - 1][nodo.value.y] = '0';
+                    break;
                 }
             }
 
 
-
-
             children.push({
                 value: {
-                    x: nodo.value.x,
-                    y: nodo.value.y - 1
+                    x: nodo.value.x - 1,
+                    y: nodo.value.y
                 },
                 actions: nodo.actions + 'U',
                 level: nodo.level + 1,
                 boxes: box1,
                 map: m1
             });
-        } else if (map[nodo.value.y - 1][nodo.value.x] == '0' || map[nodo.value.y - 1][nodo.value.x] == 'X') {
+        } else if (map[nodo.value.x - 1][nodo.value.y] == '0' || map[nodo.value.x - 1][nodo.value.y] == 'X') {
             children.push({
                 value: {
-                    x: nodo.value.x,
-                    y: nodo.value.y - 1
+                    x: nodo.value.x - 1,
+                    y: nodo.value.y
                 },
                 actions: nodo.actions + 'U',
                 level: nodo.level + 1,
-                boxes: box1,
-                map: m1
+                boxes: boxes,
+                map: map
             });
         }
         //console.log(boxes);
     }
 
     // Down
-    if (nodo.value.y < map.length - 1 && map[nodo.value.y + 1][nodo.value.x] != 'W') {
-        if (map[nodo.value.y + 1][nodo.value.x] == 'C' && (map[nodo.value.y + 2][nodo.value.x] == '0' || map[nodo.value.y + 2][nodo.value.x] == 'X')) {
+    if (nodo.value.x < map.length - 1 && map[nodo.value.x + 1][nodo.value.y] != 'W') {
+        if (map[nodo.value.x + 1][nodo.value.y] == 'C' && (map[nodo.value.x + 2][nodo.value.y] == '0' || map[nodo.value.x + 2][nodo.value.y] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
-            let y = nodo.value.y + 1; //posicion de la caja 
-            let x = nodo.value.x;
-            let posboxold = {};
-            let posboxnew = {};
+            let m2 = map.map(arr => { return arr.slice() })
+            let box2 = boxes.map(obj => { return { ...obj } })
 
 
             for (let i = 0; i < box2.length; i++) {
-                if (box2[i].y == y && box2[i].x == x) {
-                    posboxold = { x: box2[i].x, y: box2[i].y }
-                    posboxnew = { x: box2[i].x, y: box2[i].y + 1 }
-                    box2[i].y++;
+                if (box2[i].y == nodo.value.y && box2[i].x == nodo.value.x + 1) {
+                    box2[i].x++;
                     //let aux = m[posboxnew.y][posboxnew.x];
-                    m2[posboxnew.y][posboxnew.x] = 'C';
-                    m2[posboxold.y][posboxold.x] = '0';
+                    m2[nodo.value.x + 2][nodo.value.y] = 'C';
+                    m2[nodo.value.x + 1][nodo.value.y] = '0';
+                    break;
                 }
             }
 
-
             children.push({
                 value: {
-                    x: nodo.value.x,
-                    y: nodo.value.y + 1
+                    x: nodo.value.x + 1,
+                    y: nodo.value.y
                 },
                 actions: nodo.actions + 'D',
                 level: nodo.level + 1,
                 boxes: box2,
                 map: m2
             });
-        } else if (map[nodo.value.y + 1][nodo.value.x] == '0' || map[nodo.value.y + 1][nodo.value.x] == 'X') {
+        } else if (map[nodo.value.x + 1][nodo.value.y] == '0' || map[nodo.value.x + 1][nodo.value.y] == 'X') {
             children.push({
                 value: {
-                    x: nodo.value.x,
-                    y: nodo.value.y + 1
+                    x: nodo.value.x + 1,
+                    y: nodo.value.y
                 },
                 actions: nodo.actions + 'D',
                 level: nodo.level + 1,
-                boxes: box2,
-                map: m2
+                boxes: boxes,
+                map: map
             });
         }
         //console.log(boxes);
@@ -142,96 +131,87 @@ function getChildren(nodo, constantes) {
 
 
     // Left
-    if (nodo.value.x >= 1 && m2[nodo.value.y][nodo.value.x - 1] != 'W') {
+    if (nodo.value.y >= 1 && map[nodo.value.x][nodo.value.y - 1] != 'W') {
 
-        if (m2[nodo.value.y][nodo.value.x - 1] == 'C' && (m2[nodo.value.y][nodo.value.x - 2] == '0' || m2[nodo.value.y][nodo.value.x - 2] == 'X')) {
+        if (map[nodo.value.x][nodo.value.y - 1] == 'C' && (map[nodo.value.x][nodo.value.y - 2] == '0' || map[nodo.value.x][nodo.value.y - 2] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
-            let y = nodo.value.y;
-            let x = nodo.value.x - 1;
-            let posboxold = {};
-            let posboxnew = {};
-
+            let m3 = map.map(arr => { return arr.slice() })
+            let box3 = boxes.map(obj => { return { ...obj } })
 
             for (let i = 0; i < box3.length; i++) {
-                if (box3[i].y == y && box3[i].x == x) {
-                    posboxold = { x: box3[i].x, y: box3[i].y }
-                    posboxnew = { x: box3[i].x - 1, y: box3[i].y }
-                    box3[i].x--;
+                if (box3[i].y == nodo.value.y - 1 && box3[i].x == nodo.value.x) {
+
+                    box3[i].y--;
                     //let aux = m[posboxnew.x][posboxnew.y];
-                    m3[posboxnew.y][posboxnew.x] = 'C';
-                    m3[posboxold.y][posboxold.x] = '0';
+                    m3[nodo.value.y - 2][nodo.value.x] = 'C';
+                    m3[nodo.value.y - 1][nodo.value.x] = '0';
+                    break;
                 }
             }
 
-
-
             children.push({
                 value: {
-                    x: nodo.value.x - 1,
-                    y: nodo.value.y
+                    x: nodo.value.x,
+                    y: nodo.value.y - 1
                 },
                 actions: nodo.actions + 'L',
                 level: nodo.level + 1,
                 boxes: box3,
                 map: m3
             });
-        } else if (map[nodo.value.y][nodo.value.x - 1] == '0' || map[nodo.value.y][nodo.value.x - 1] == 'X') {
+        } else if (map[nodo.value.x][nodo.value.y - 1] == '0' || map[nodo.value.x][nodo.value.y - 1] == 'X') {
             children.push({
                 value: {
-                    x: nodo.value.x - 1,
-                    y: nodo.value.y
+                    x: nodo.value.x,
+                    y: nodo.value.y - 1
                 },
                 actions: nodo.actions + 'L',
                 level: nodo.level + 1,
-                boxes: box3,
-                map: m3
+                boxes: boxes,
+                map: map
             });
         }
         //console.log(boxes);
     }
 
     // Right
-    if (nodo.value.x < map[0].length - 1 && map[nodo.value.y][nodo.value.x + 1] != 'W') {
-        if (map[nodo.value.y][nodo.value.x + 1] == 'C' && (map[nodo.value.y][nodo.value.x + 2] == '0' || map[nodo.value.y][nodo.value.x + 2] == 'X')) {
+    if (nodo.value.y < map[0].length - 1 && map[nodo.value.x][nodo.value.y + 1] != 'W') {
+        if (map[nodo.value.x][nodo.value.y + 1] == 'C' && (map[nodo.value.x][nodo.value.y + 2] == '0' || map[nodo.value.x][nodo.value.y + 2] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
-            let y = nodo.value.y;
-            let x = nodo.value.x + 1;
-            let posboxold = {};
-            let posboxnew = {};
+            let m4 = map.map(arr => { return arr.slice() })
+            let box4 = boxes.map(obj => { return { ...obj } })
 
             for (let i = 0; i < box4.length; i++) {
-                if (box4[i].y == y && box4[i].x == x) {
-                    posboxold = { x: box4[i].x, y: box4[i].y }
-                    posboxnew = { x: box4[i].x + 1, y: box4[i].y }
-                    box4[i].x++;
+                if (box4[i].y == nodo.value.y + 1 && box4[i].x == nodo.value.x) {
+                    box4[i].y++;
                     //let aux = m[posboxnew.y][posboxnew.x];
-                    m4[posboxnew.y][posboxnew.x] = 'C';
-                    m4[posboxold.y][posboxold.x] = '0';
+                    m4[nodo.value.y + 2][nodo.value.x] = 'C';
+                    m4[nodo.value.y + 1][nodo.value.x] = '0';
+                    break;
                 }
             }
-
-
+            
 
             children.push({
                 value: {
-                    x: nodo.value.x + 1,
-                    y: nodo.value.y
+                    x: nodo.value.x,
+                    y: nodo.value.y + 1
                 },
                 actions: nodo.actions + 'R',
                 level: nodo.level + 1,
                 boxes: box4,
                 map: m4
             });
-        } else if (map[nodo.value.y][nodo.value.x + 1] == '0' || map[nodo.value.y][nodo.value.x + 1] == 'X') {
+        } else if (map[nodo.value.x][nodo.value.y + 1] == '0' || map[nodo.value.x][nodo.value.y + 1] == 'X') {
             children.push({
                 value: {
-                    x: nodo.value.x + 1,
-                    y: nodo.value.y
+                    x: nodo.value.x,
+                    y: nodo.value.y + 1
                 },
                 actions: nodo.actions + 'R',
                 level: nodo.level + 1,
-                boxes: box4,
-                map: m4
+                boxes: boxes,
+                map: map
             });
         }
 
@@ -335,6 +315,7 @@ function read() {
 
 
     start = posiciones[0]
+    //mapita[posiciones[0].x][posiciones[0].y] = 'J' //prueba ubicacion inicial del agente
     mapita[posiciones[1].x][posiciones[1].y] = 'C'
     bx.push({
         'x': parseInt(posiciones[1].x),
