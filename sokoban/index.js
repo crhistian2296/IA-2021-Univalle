@@ -20,8 +20,6 @@ function isSolution(nodo, constantes) {
         for (let j = 0; j < boxes.length; j++) {
             if (boxes[i].x == solution[j].x && boxes[i].y == solution[j].y) {
                 contador++;
-            } else {
-                contador--;
             }
         }
     }
@@ -33,14 +31,8 @@ function isSolution(nodo, constantes) {
 
 function getChildren(nodo, constantes) {
     let map = nodo.map;
-
-
-
     let children = [];
     let boxes = nodo.boxes;
-
-
-
 
     // Up
     if (nodo.value.x >= 1 && map[nodo.value.x - 1][nodo.value.y] != 'W') {

@@ -1,4 +1,5 @@
-var hashtable = []
+var SimpleHashTable = require('simple-hashtable');
+var hashtable = new SimpleHashTable();
 
 function addToQueue(queue, nodes) {
     queue.push(...nodes);
@@ -11,18 +12,27 @@ function removeFromQueue(queue) {
 
 function generateKey(nodo, mapa) {
     let mapaL = mapa.length;
-
+    let key = 0
     let x = nodo.value.x;
     let y = nodo.value.y;
-    let key = (x + 1) + (y * mapaL)
+    let cajas = nodo.boxes;
+    /* key = (x + 1) + (y * mapaL)
+    for (let i = 0; i < cajas.length; i++) {
+        key += ((cajas[i].x * 2 ** i) + (cajas[i].y * 2 ** (i + 3)));
+    } */
+    key += x + 10 * y;
+    for (let i = 0; i < cajas.length; i++) {
+        key +=
+            100 ** (i + 1) * (cajas[i].x + 10 * cajas[i].y);
+    }
+    console.log(key);
     return key
 }
 
 function avoidCycles(nodo, mapa) {
     let key = generateKey(nodo, mapa)
-    if (!(hashtable[key])) {
-        //console.log(key, nodo.level);
-        hashtable.push(key)
+    if (!(hashtable.containsKey(key))) {
+        hashtable.put(key, nodo.level)
         return true
     }
     return false
@@ -42,16 +52,10 @@ function bfs(problem) {
     let cola = [];
     cola = [nodoRaiz];
     while (cola.length != 0) { //(cola[0].level < 4){//(cola[0].actions.length < 60) {//
-        //console.log(cola);
         let nodoExpandido = removeFromQueue(cola);
         console.log(nodoExpandido.actions);
-        //console.log(nodoExpandido.map);
-        //console.log(nodoExpandido);
-         /* console.log(nodoExpandido.value);
-        console.log(nodoExpandido.boxes);
-        
-        console.log(nodoExpandido.map[nodoExpandido.value.x][nodoExpandido.value.y]);
-        console.log('------');  */
+        /*console.log(nodoExpandido.map);
+        console.log(nodoExpandido.boxes); */
 
         if (problem.isSolution(nodoExpandido, problem.constantes)) {
             console.log(nodoExpandido.actions)
