@@ -1,5 +1,4 @@
-var SimpleHashTable = require('simple-hashtable');
-var hashtable = new SimpleHashTable();
+var hashtable = [];
 
 function addToQueue(queue, nodes) {
     queue.push(...nodes);
@@ -25,14 +24,14 @@ function generateKey(nodo, mapa) {
         key +=
             100 ** (i + 1) * (cajas[i].x + 10 * cajas[i].y);
     }
-    console.log(key);
     return key
 }
 
 function avoidCycles(nodo, mapa) {
     let key = generateKey(nodo, mapa)
-    if (!(hashtable.containsKey(key))) {
-        hashtable.put(key, nodo.level)
+    if ((hashtable.indexOf(key)) == -1) {
+        hashtable.push(key);
+        console.log(hashtable);
         return true
     }
     return false

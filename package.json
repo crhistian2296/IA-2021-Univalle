@@ -49,5 +49,7 @@
         "jest": "^24.5.0",
         "rimraf": "^2.6.3"
     },
-    "dependencies": {}
+    "dependencies": {
+        "simple-hashtable": "^1.0.0"
+    }
 }
