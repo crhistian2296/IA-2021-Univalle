@@ -1,4 +1,5 @@
 var hashtable = [];
+let nodosExpandidos = [];
 
 function addToQueue(queue, nodes) {
     queue.push(...nodes);
@@ -25,7 +26,8 @@ function generateKey(nodo, mapa) {
 
 function avoidCycles(nodo, mapa) {
     let key = generateKey(nodo, mapa)
-    if ((hashtable.indexOf(key)) == -1) {
+    let index = hashtable.indexOf(key);
+    if (index == -1) {
         hashtable.push(key);
         return true
     }
@@ -43,15 +45,10 @@ function bfs(problem) {
         map: problem.constantes.map
     };
 
-    //console.log(problem.constantes.boxes);
     let cola = [];
-    let nodosExpandidos = [];
     cola = [nodoRaiz];
     while (cola.length != 0) { //(cola[0].level < 4){//(cola[0].actions.length < 60) {//
         let nodoExpandido = removeFromQueue(cola);
-        //console.log(cola.length);
-        /*console.log(nodoExpandido.map);
-        console.log(nodoExpandido.boxes); */
 
         if (problem.isSolution(nodoExpandido, problem.constantes)) {
             //console.log(nodoExpandido.actions)
@@ -59,14 +56,8 @@ function bfs(problem) {
         } else if (!avoidCycles(nodoExpandido, nodosExpandidos)) {
             continue;
         } else {
-            nodosExpandidos.push(nodoExpandido)
-            //console.log(nodoExpandido.actions);
             addToQueue(cola, problem.getChildren(nodoExpandido, problem.constantes));
         }
-    }
-    for (let i = 0; i < hashtable.length; i++) {
-        console.log(hashtable[i]);
-        
     }
     return 'no se encontró solución'
 }

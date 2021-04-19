@@ -5,7 +5,7 @@ W0CWJW                                                  //RDLDDRRRUULLRRDDLLUDRR
 W0000W
 WWWWWW
 GOAL = 2,1 u 2,3
-
+RDLDDRRRUULLDDRR
 
 1,1  boxes 2,2 y 2,3 
 1,2  boxes 2,2 y 2,3 R
@@ -23,4 +23,4 @@ GOAL = 2,1 u 2,3
 3,2  boxes 3,2 y 2,1 R
 4,2  boxes 3,2 y 2,1 R
 4,3  boxes 3,2 y 2,1 D
-4,4  boxes 3,2 y 2,1 D
+4,4  boxes 3,2 y 2,1 D //no llega hasta aquí :c   29-(3,2)-(2,1)

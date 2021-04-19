@@ -1,7 +1,7 @@
 const bfs = require("./bfs");
 const dfs = require("./dfs");
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
 
 var map = []
 
@@ -39,7 +39,6 @@ function getChildren(nodo, constantes) {
     let boxes = nodo.boxes;
     // Up
     if (nodo.value.x >= 1 && map[nodo.value.x - 1][nodo.value.y] != 'W') {
-        //if (map[nodo.value.y - 2][nodo.value.x] != 'W' && map[nodo.value.y - 2][nodo.value.x] != 'C' && map[nodo.value.y - 1][nodo.value.x] == 'C') {
         if (map[nodo.value.x - 1][nodo.value.y] == 'C' && (map[nodo.value.x - 2][nodo.value.y] == '0' || map[nodo.value.x - 2][nodo.value.y] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
             let m1 = JSON.parse(JSON.stringify(map));
@@ -140,8 +139,8 @@ function getChildren(nodo, constantes) {
 
                     box3[i].y--;
                     //let aux = m[posboxnew.x][posboxnew.y];
-                    m3[nodo.value.y - 2][nodo.value.x] = 'C';
-                    m3[nodo.value.y - 1][nodo.value.x] = '0';
+                    m3[nodo.value.x][nodo.value.y - 2] = 'C';
+                    m3[nodo.value.x][nodo.value.y - 1] = '0';
                     break;
                 }
             }
@@ -183,8 +182,8 @@ function getChildren(nodo, constantes) {
                 if (box4[i].y == nodo.value.y + 1 && box4[i].x == nodo.value.x) {
                     box4[i].y++;
                     //let aux = m[posboxnew.y][posboxnew.x];
-                    m4[nodo.value.y + 2][nodo.value.x] = 'C';
-                    m4[nodo.value.y + 1][nodo.value.x] = '0';
+                    m4[nodo.value.x][nodo.value.y + 2] = 'C';
+                    m4[nodo.value.x] [nodo.value.y + 1]= '0';
                     break;
                 }
             }
@@ -279,7 +278,7 @@ console.log(isSolution({'boxes':[{
 
 
 function read() {
-    file = fs.readFileSync('/home/juancamilo/Cursos/2021-1/IA/IA-2021-Univalle/sokoban/levels/level1.txt', 'utf-8')
+    file = fs.readFileSync('/home/juancamilo/Cursos/2021-1/IA/IA-2021-Univalle/sokoban/levels/nivel5.txt', 'utf-8')
     line = file.split('\n')
     //Las lineas cuyo tamaño es 3 corresponden a la posición del muñeco, y las posiciones de la caja respectivamente
     /// las otras son el mapa
@@ -311,10 +310,18 @@ function read() {
         }
     }
 
-
     start = posiciones[0]
+    //generalizamos para n cajas
+    for (let i = 1; i < posiciones.length; i++) {
+        mapita[posiciones[i].x][posiciones[i].y] = 'C'
+        bx.push({
+            'x': parseInt(posiciones[i].x),
+            'y': parseInt(posiciones[i].y)
+        })
+    }
+    
     //mapita[posiciones[0].x][posiciones[0].y] = 'J' //prueba ubicacion inicial del agente
-    mapita[posiciones[1].x][posiciones[1].y] = 'C'
+    /* mapita[posiciones[1].x][posiciones[1].y] = 'C'
     bx.push({
         'x': parseInt(posiciones[1].x),
         'y': parseInt(posiciones[1].y)
@@ -323,7 +330,7 @@ function read() {
     bx.push({
         'x': parseInt(posiciones[2].x),
         'y': parseInt(posiciones[2].y)
-    })
+    }) */
     boxes = bx
     solution = sols;
     map = mapita;
@@ -346,7 +353,7 @@ let problem = {
     getChildren
 }
 
-let solutionProblem = dfs(problem);
+let solutionProblem = bfs(problem);
 console.log(solutionProblem);
 
 /* console.log(getChildren({
