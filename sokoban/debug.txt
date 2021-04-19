@@ -1,0 +1,26 @@
+WWWWWW
+W000WW
+WK000W     //DLLUDRRUULULLDRDDLU
+W0CWJW                                                  //RDLDDRRRUULLRRDDLLUDRRUULULLDRDDLU    //RDLDDRRRUULLRRD
+W0000W
+WWWWWW
+GOAL = 2,1 u 2,3
+
+
+1,1  boxes 2,2 y 2,3 
+1,2  boxes 2,2 y 2,3 R
+2,2  boxes 3,2 y 2,3 D
+2,1  boxes 3,2 y 2,3 L
+3,1  boxes 3,2 y 2,3 D
+4,1  boxes 3,2 y 2,3 D
+4,2  boxes 3,2 y 2,3 R
+4,3  boxes 3,2 y 2,3 R
+4,4  boxes 3,2 y 2,3 R
+3,4  boxes 3,2 y 2,3 U
+2,4  boxes 3,2 y 2,3 U
+2,3  boxes 3,2 y 2,2 L
+2,2  boxes 3,2 y 2,1 L
+3,2  boxes 3,2 y 2,1 R
+4,2  boxes 3,2 y 2,1 R
+4,3  boxes 3,2 y 2,1 D
+4,4  boxes 3,2 y 2,1 D

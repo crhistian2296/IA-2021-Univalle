@@ -1,4 +1,5 @@
 const bfs = require("./bfs");
+const dfs = require("./dfs");
 const fs = require('fs')
 const path = require('path')
 
@@ -36,20 +37,13 @@ function getChildren(nodo, constantes) {
     let map = nodo.map;
     let children = [];
     let boxes = nodo.boxes;
-
     // Up
     if (nodo.value.x >= 1 && map[nodo.value.x - 1][nodo.value.y] != 'W') {
         //if (map[nodo.value.y - 2][nodo.value.x] != 'W' && map[nodo.value.y - 2][nodo.value.x] != 'C' && map[nodo.value.y - 1][nodo.value.x] == 'C') {
         if (map[nodo.value.x - 1][nodo.value.y] == 'C' && (map[nodo.value.x - 2][nodo.value.y] == '0' || map[nodo.value.x - 2][nodo.value.y] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
-            let m1 = map.map(arr => {
-                return arr.slice()
-            }) //copias del array para que no modifique por referencia
-            let box1 = boxes.map(obj => {
-                return {
-                    ...obj
-                }
-            })
+            let m1 = JSON.parse(JSON.stringify(map));
+            let box1 = JSON.parse(JSON.stringify(boxes));
 
             for (let i = 0; i < box1.length; i++) {
                 if (box1[i].y == nodo.value.y && box1[i].x == nodo.value.x - 1) {
@@ -91,14 +85,9 @@ function getChildren(nodo, constantes) {
     if (nodo.value.x < map.length - 1 && map[nodo.value.x + 1][nodo.value.y] != 'W') {
         if (map[nodo.value.x + 1][nodo.value.y] == 'C' && (map[nodo.value.x + 2][nodo.value.y] == '0' || map[nodo.value.x + 2][nodo.value.y] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
-            let m2 = map.map(arr => {
-                return arr.slice()
-            })
-            let box2 = boxes.map(obj => {
-                return {
-                    ...obj
-                }
-            })
+            
+            let m2 = JSON.parse(JSON.stringify(map));
+            let box2 = JSON.parse(JSON.stringify(boxes));
 
 
             for (let i = 0; i < box2.length; i++) {
@@ -142,14 +131,9 @@ function getChildren(nodo, constantes) {
 
         if (map[nodo.value.x][nodo.value.y - 1] == 'C' && (map[nodo.value.x][nodo.value.y - 2] == '0' || map[nodo.value.x][nodo.value.y - 2] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
-            let m3 = map.map(arr => {
-                return arr.slice()
-            })
-            let box3 = boxes.map(obj => {
-                return {
-                    ...obj
-                }
-            })
+            
+            let m3 = JSON.parse(JSON.stringify(map));
+            let box3 = JSON.parse(JSON.stringify(boxes));
 
             for (let i = 0; i < box3.length; i++) {
                 if (box3[i].y == nodo.value.y - 1 && box3[i].x == nodo.value.x) {
@@ -191,14 +175,9 @@ function getChildren(nodo, constantes) {
     if (nodo.value.y < map[0].length - 1 && map[nodo.value.x][nodo.value.y + 1] != 'W') {
         if (map[nodo.value.x][nodo.value.y + 1] == 'C' && (map[nodo.value.x][nodo.value.y + 2] == '0' || map[nodo.value.x][nodo.value.y + 2] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
-            let m4 = map.map(arr => {
-                return arr.slice()
-            })
-            let box4 = boxes.map(obj => {
-                return {
-                    ...obj
-                }
-            })
+        
+            let m4 = JSON.parse(JSON.stringify(map));
+            let box4 = JSON.parse(JSON.stringify(boxes));
 
             for (let i = 0; i < box4.length; i++) {
                 if (box4[i].y == nodo.value.y + 1 && box4[i].x == nodo.value.x) {
@@ -300,7 +279,7 @@ console.log(isSolution({'boxes':[{
 
 
 function read() {
-    file = fs.readFileSync('/Users/crhistian2296/Documents/Universidad/6° semestre/IA-2021/sokoban/levels/level1.txt', 'utf-8')
+    file = fs.readFileSync('/home/juancamilo/Cursos/2021-1/IA/IA-2021-Univalle/sokoban/levels/level1.txt', 'utf-8')
     line = file.split('\n')
     //Las lineas cuyo tamaño es 3 corresponden a la posición del muñeco, y las posiciones de la caja respectivamente
     /// las otras son el mapa
@@ -367,7 +346,7 @@ let problem = {
     getChildren
 }
 
-let solutionProblem = bfs(problem);
+let solutionProblem = dfs(problem);
 console.log(solutionProblem);
 
 /* console.log(getChildren({

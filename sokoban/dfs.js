@@ -1,7 +1,9 @@
+//var simpleHashtable = require('simple-hashtable');
 var hashtable = [];
 
+
 function addToQueue(queue, nodes) {
-    queue.push(...nodes);
+    queue.unshift(...nodes);
     return queue;
 }
 
@@ -27,14 +29,14 @@ function avoidCycles(nodo, mapa) {
     let key = generateKey(nodo, mapa)
     if ((hashtable.indexOf(key)) == -1) {
         hashtable.push(key);
+        //console.log(hashtable);
         return true
     }
     return false
 }
 
 
-
-function bfs(problem) {
+function dfs(problem) {
     let nodoRaiz = {
         value: problem.constantes.start,
         actions: '',
@@ -49,26 +51,21 @@ function bfs(problem) {
     cola = [nodoRaiz];
     while (cola.length != 0) { //(cola[0].level < 4){//(cola[0].actions.length < 60) {//
         let nodoExpandido = removeFromQueue(cola);
+        console.log(nodoExpandido.actions);
         //console.log(cola.length);
         /*console.log(nodoExpandido.map);
         console.log(nodoExpandido.boxes); */
 
         if (problem.isSolution(nodoExpandido, problem.constantes)) {
-            //console.log(nodoExpandido.actions)
+            console.log(nodoExpandido.actions)
             return 'Es meta el nodo ' + nodoExpandido.actions + ' nivel ' + nodoExpandido.level;
         } else if (!avoidCycles(nodoExpandido, nodosExpandidos)) {
             continue;
         } else {
             nodosExpandidos.push(nodoExpandido)
-            //console.log(nodoExpandido.actions);
             addToQueue(cola, problem.getChildren(nodoExpandido, problem.constantes));
         }
     }
-    for (let i = 0; i < hashtable.length; i++) {
-        console.log(hashtable[i]);
-        
-    }
     return 'no se encontró solución'
 }
-
-module.exports = bfs;
+module.exports = dfs;
