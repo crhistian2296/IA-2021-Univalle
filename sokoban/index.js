@@ -278,7 +278,7 @@ console.log(isSolution({'boxes':[{
 
 
 function read() {
-    file = fs.readFileSync('/home/juancamilo/Cursos/2021-1/IA/IA-2021-Univalle/sokoban/levels/nivel5.txt', 'utf-8')
+    file = fs.readFileSync('/home/juancamilo/Cursos/2021-1/IA/IA-2021-Univalle/sokoban/levels/nivel3.txt', 'utf-8')
     line = file.split('\n')
     //Las lineas cuyo tamaño es 3 corresponden a la posición del muñeco, y las posiciones de la caja respectivamente
     /// las otras son el mapa
@@ -353,7 +353,7 @@ let problem = {
     getChildren
 }
 
-let solutionProblem = bfs(problem);
+let solutionProblem = dfs(problem);
 console.log(solutionProblem);
 
 /* console.log(getChildren({

@@ -1,5 +1,4 @@
 var hashtable = [];
-let nodosExpandidos = [];
 
 function addToQueue(queue, nodes) {
     queue.push(...nodes);
@@ -10,7 +9,7 @@ function removeFromQueue(queue) {
     return queue.shift();
 }
 
-function generateKey(nodo, mapa) {
+function generateKey(nodo) {
     let mapaL = nodo.map.length;
     let key = 0
     let x = nodo.value.x;
@@ -18,20 +17,20 @@ function generateKey(nodo, mapa) {
     let boxes = nodo.boxes;
     key = (x + 1) + (y * mapaL) //casillaPosición-(x1,y1)-(x2,y2) 2 + 1*6
     for (let i = 0; i < boxes.length; i++) {
-        key += '-('+boxes[i].x+','+boxes[i].y+')';
+        key += '-(' + boxes[i].x + ',' + boxes[i].y + ')';
     }
 
     return key
 }
 
-function avoidCycles(nodo, mapa) {
-    let key = generateKey(nodo, mapa)
-    let index = hashtable.indexOf(key);
-    if (index == -1) {
-        hashtable.push(key);
+function avoidCycles(nodo) {
+    let key = generateKey(nodo)
+    if (hashtable.includes(key)) {
         return true
+    } else {
+        hashtable.push(key);
+        return false
     }
-    return false
 }
 
 
@@ -49,12 +48,10 @@ function bfs(problem) {
     cola = [nodoRaiz];
     while (cola.length != 0) { //(cola[0].level < 4){//(cola[0].actions.length < 60) {//
         let nodoExpandido = removeFromQueue(cola);
-
-        if (problem.isSolution(nodoExpandido, problem.constantes)) {
-            //console.log(nodoExpandido.actions)
-            return 'Es meta el nodo ' + nodoExpandido.actions + ' nivel ' + nodoExpandido.level;
-        } else if (!avoidCycles(nodoExpandido, nodosExpandidos)) {
+        if (avoidCycles(nodoExpandido) && nodoExpandido.level < 64) {
             continue;
+        } else if (problem.isSolution(nodoExpandido, problem.constantes)) {
+            return 'Es meta el nodo ' + nodoExpandido.actions + ' nivel ' + nodoExpandido.level;
         } else {
             addToQueue(cola, problem.getChildren(nodoExpandido, problem.constantes));
         }
