@@ -277,8 +277,8 @@ console.log(isSolution({'boxes':[{
 //console.log(solution); // "RUUUUU"
 
 
-function read() {
-    file = fs.readFileSync('levels/nivel4.txt', 'utf-8')
+function read(level) {
+    file = fs.readFileSync('levels/' + level, 'utf-8')
     line = file.split('\n')
     //Las lineas cuyo tamaño es 3 corresponden a la posición del muñeco, y las posiciones de la caja respectivamente
     /// las otras son el mapa
@@ -336,7 +336,7 @@ function read() {
     map = mapita;
 }
 
-read()
+read(process.argv[2])
 //console.log(map);
 let constantes = {
     map,
