@@ -84,7 +84,7 @@ function getChildren(nodo, constantes) {
     if (nodo.value.x < map.length - 1 && map[nodo.value.x + 1][nodo.value.y] != 'W') {
         if (map[nodo.value.x + 1][nodo.value.y] == 'C' && (map[nodo.value.x + 2][nodo.value.y] == '0' || map[nodo.value.x + 2][nodo.value.y] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
-            
+
             let m2 = JSON.parse(JSON.stringify(map));
             let box2 = JSON.parse(JSON.stringify(boxes));
 
@@ -130,7 +130,7 @@ function getChildren(nodo, constantes) {
 
         if (map[nodo.value.x][nodo.value.y - 1] == 'C' && (map[nodo.value.x][nodo.value.y - 2] == '0' || map[nodo.value.x][nodo.value.y - 2] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
-            
+
             let m3 = JSON.parse(JSON.stringify(map));
             let box3 = JSON.parse(JSON.stringify(boxes));
 
@@ -174,7 +174,7 @@ function getChildren(nodo, constantes) {
     if (nodo.value.y < map[0].length - 1 && map[nodo.value.x][nodo.value.y + 1] != 'W') {
         if (map[nodo.value.x][nodo.value.y + 1] == 'C' && (map[nodo.value.x][nodo.value.y + 2] == '0' || map[nodo.value.x][nodo.value.y + 2] == 'X')) {
             //logica para modificar las posiciones de las cajas en la variable boxes
-        
+
             let m4 = JSON.parse(JSON.stringify(map));
             let box4 = JSON.parse(JSON.stringify(boxes));
 
@@ -183,7 +183,7 @@ function getChildren(nodo, constantes) {
                     box4[i].y++;
                     //let aux = m[posboxnew.y][posboxnew.x];
                     m4[nodo.value.x][nodo.value.y + 2] = 'C';
-                    m4[nodo.value.x] [nodo.value.y + 1]= '0';
+                    m4[nodo.value.x][nodo.value.y + 1] = '0';
                     break;
                 }
             }
@@ -278,7 +278,7 @@ console.log(isSolution({'boxes':[{
 
 
 function read() {
-    file = fs.readFileSync('/home/juancamilo/Cursos/2021-1/IA/IA-2021-Univalle/sokoban/levels/nivel3.txt', 'utf-8')
+    file = fs.readFileSync('levels/nivel4.txt', 'utf-8')
     line = file.split('\n')
     //Las lineas cuyo tamaño es 3 corresponden a la posición del muñeco, y las posiciones de la caja respectivamente
     /// las otras son el mapa
@@ -319,7 +319,7 @@ function read() {
             'y': parseInt(posiciones[i].y)
         })
     }
-    
+
     //mapita[posiciones[0].x][posiciones[0].y] = 'J' //prueba ubicacion inicial del agente
     /* mapita[posiciones[1].x][posiciones[1].y] = 'C'
     bx.push({
