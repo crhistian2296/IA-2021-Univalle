@@ -1,4 +1,4 @@
-var hashtable = [];
+
 
 function addToQueue(queue, nodes) {
     queue.unshift(...nodes);
@@ -23,7 +23,7 @@ function generateKey(nodo) {
     return key
 }
 
-function avoidCycles(nodo) {
+function avoidCycles(nodo, hashtable) {
     let key = generateKey(nodo)
     if (hashtable.includes(key)) {
         return true
@@ -43,22 +43,30 @@ function ids(problem) {
         boxes: problem.constantes.boxes,
         map: problem.constantes.map
     };
-    let limit = 1;
-    let cola = [];
-    cola = [nodoRaiz];
+    let limit = 0;
+    let found = true;
 
-    while (cola.length != 0) { //(cola[0].level < 4){//(cola[0].actions.length < 60) {//
-        let nodoExpandido = removeFromQueue(cola);
-        if (avoidCycles(nodoExpandido) || nodoExpandido.level > 64) {
-            continue;
-        } else if (problem.isSolution(nodoExpandido, problem.constantes)) {
-            return 'Es meta el nodo ' + nodoExpandido.actions + ' nivel ' + nodoExpandido.level;
-        } else if (nodoExpandido.level < limit) {
-            addToQueue(cola, problem.getChildren(nodoExpandido, problem.constantes));
+
+    while (found) {
+        let hashtable = [];
+        let cola = [];
+        cola = [nodoRaiz];
+        while (cola.length != 0) {
+            let nodoExpandido = removeFromQueue(cola);
+            if (avoidCycles(nodoExpandido, hashtable) || nodoExpandido.level > 64) {
+                continue;
+            } else if (problem.isSolution(nodoExpandido, problem.constantes)) {
+                found = false;
+                return 'Es meta el nodo ' + nodoExpandido.actions + ' nivel ' + nodoExpandido.level;
+            } else if (nodoExpandido.level < limit) {
+                addToQueue(cola, problem.getChildren(nodoExpandido, problem.constantes));
+            }
+
         }
         limit++;
     }
     return 'no se encontró solución'
+
 }
 
 module.exports = ids;

@@ -352,7 +352,17 @@ let problem = {
     getChildren
 }
 
-let solutionProblem = bfs(problem);
+let solutionProblem = ''
+if (process.argv[3] == 1) {
+    solutionProblem = bfs(problem);
+    console.log('Solucion usando busqueda por amplitud');
+}else if (process.argv[3] == 2) {
+    solutionProblem = dfs(problem);
+    console.log('Solucion usando busqueda por profundidad');
+}else if (process.argv[3] == 3) {
+    solutionProblem = ids(problem);
+    console.log('Solucion usando busqueda por profundidad iterativa');
+}
 console.log(solutionProblem);
 
 /* console.log(getChildren({
