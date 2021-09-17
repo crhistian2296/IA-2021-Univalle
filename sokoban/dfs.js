@@ -49,7 +49,7 @@ function dfs(problem) {
     cola = [nodoRaiz];
     while (cola.length != 0) { //(cola[0].level < 4){//(cola[0].actions.length < 60) {//
         let nodoExpandido = removeFromQueue(cola);
-        if (avoidCycles(nodoExpandido)){// && nodoExpandido.level < 64) {
+        if (avoidCycles(nodoExpandido) || nodoExpandido.level > 64){// && nodoExpandido.level < 64) {
             continue;
         } else if (problem.isSolution(nodoExpandido, problem.constantes)) {
             return 'Es meta el nodo ' + nodoExpandido.actions + ' nivel ' + nodoExpandido.level;
