@@ -1,5 +1,6 @@
 const bfs = require("./bfs");
 const dfs = require("./dfs");
+const ids = require("./ids");
 const fs = require('fs');
 const path = require('path');
 
@@ -26,6 +27,9 @@ function isSolution(nodo, constantes) {
                 contador++;
             }
         }
+        if (contador == 0) {
+            break;
+        }
     }
 
     if (contador == boxes.length)
@@ -47,7 +51,6 @@ function getChildren(nodo, constantes) {
             for (let i = 0; i < box1.length; i++) {
                 if (box1[i].y == nodo.value.y && box1[i].x == nodo.value.x - 1) {
                     box1[i].x--;
-                    //let aux = m[posboxnew.y][posboxnew.x];
                     m1[nodo.value.x - 2][nodo.value.y] = 'C';
                     m1[nodo.value.x - 1][nodo.value.y] = '0';
                     break;
@@ -92,7 +95,6 @@ function getChildren(nodo, constantes) {
             for (let i = 0; i < box2.length; i++) {
                 if (box2[i].y == nodo.value.y && box2[i].x == nodo.value.x + 1) {
                     box2[i].x++;
-                    //let aux = m[posboxnew.y][posboxnew.x];
                     m2[nodo.value.x + 2][nodo.value.y] = 'C';
                     m2[nodo.value.x + 1][nodo.value.y] = '0';
                     break;
@@ -138,7 +140,6 @@ function getChildren(nodo, constantes) {
                 if (box3[i].y == nodo.value.y - 1 && box3[i].x == nodo.value.x) {
 
                     box3[i].y--;
-                    //let aux = m[posboxnew.x][posboxnew.y];
                     m3[nodo.value.x][nodo.value.y - 2] = 'C';
                     m3[nodo.value.x][nodo.value.y - 1] = '0';
                     break;
@@ -181,7 +182,6 @@ function getChildren(nodo, constantes) {
             for (let i = 0; i < box4.length; i++) {
                 if (box4[i].y == nodo.value.y + 1 && box4[i].x == nodo.value.x) {
                     box4[i].y++;
-                    //let aux = m[posboxnew.y][posboxnew.x];
                     m4[nodo.value.x][nodo.value.y + 2] = 'C';
                     m4[nodo.value.x] [nodo.value.y + 1]= '0';
                     break;
@@ -278,7 +278,7 @@ console.log(isSolution({'boxes':[{
 
 
 function read() {
-    file = fs.readFileSync('/home/juancamilo/Cursos/2021-1/IA/IA-2021-Univalle/sokoban/levels/nivel3.txt', 'utf-8')
+    file = fs.readFileSync('/home/juancamilo/Cursos/2021-1/IA/IA-2021-Univalle/sokoban/levels/nivel4.txt', 'utf-8')
     line = file.split('\n')
     //Las lineas cuyo tamaño es 3 corresponden a la posición del muñeco, y las posiciones de la caja respectivamente
     /// las otras son el mapa
@@ -286,7 +286,7 @@ function read() {
     mapita = []
     sols = []
     bx = []
-
+    //lee las posiciones de las cajas y el agente, seguido del mapa
     for (let i = 0; i < line.length; i++) {
         if (line[i].length == 3) {
             posiciones.push({
@@ -320,30 +320,17 @@ function read() {
         })
     }
     
-    //mapita[posiciones[0].x][posiciones[0].y] = 'J' //prueba ubicacion inicial del agente
-    /* mapita[posiciones[1].x][posiciones[1].y] = 'C'
-    bx.push({
-        'x': parseInt(posiciones[1].x),
-        'y': parseInt(posiciones[1].y)
-    })
-    mapita[posiciones[2].x][posiciones[2].y] = 'C' //ponemos en el mapa una C de Caja
-    bx.push({
-        'x': parseInt(posiciones[2].x),
-        'y': parseInt(posiciones[2].y)
-    }) */
     boxes = bx
     solution = sols;
     map = mapita;
 }
 
 read()
-//console.log(map);
 let constantes = {
     map,
     solution,
     start,
     actions,
-    costs,
     boxes
 }
 
@@ -353,7 +340,7 @@ let problem = {
     getChildren
 }
 
-let solutionProblem = dfs(problem);
+let solutionProblem = bfs(problem);
 console.log(solutionProblem);
 
 /* console.log(getChildren({
