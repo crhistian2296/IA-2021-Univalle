@@ -6,6 +6,7 @@ First attemp to create a multi agent framework for the lecture: Introducción a 
 
 ``` bash
 git clone https://github.com/crhistian2296/IA-2021-Univalle
+cd IA-2021-Univalle
 npm install
 cd sokoban
 ```
