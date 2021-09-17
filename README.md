@@ -5,35 +5,27 @@ First attemp to create a multi agent framework for the lecture: Introducción a 
 ## Install
 
 ``` bash
-git clone https://github.com/andcastillo/ai-agents.git
-cd ai-agents
-npm install 
+git clone https://github.com/crhistian2296/IA-2021-Univalle
+npm install
+cd sokoban
 ```
 
 ## Run the example
 
-node src/example/main.js
+node index.js nivel1.txt algoritmoBusqueda
+
+reemplace algoritmo busqueda por 1 si quiere resolver el tablero
+de sokoban usando busqueda por amplitud, 2 para busqueda por profundidad
+y 3 para busqueda por profundidad iterativa
+
+Ejemplo:
+node index.js nivel1.txt 1
 
 ## Output
 
 ```
-Winner Smith
-[ { agentID: 'Smith', action: 'DOWN' },
-  { agentID: 'Smith', action: 'RIGHT' },
-  { agentID: 'Smith', action: 'RIGHT' },
-  { agentID: 'Smith', action: 'LEFT' },
-  { agentID: 'Smith', action: 'RIGHT' },
-  { agentID: 'Smith', action: 'LEFT' },
-  { agentID: 'Smith', action: 'RIGHT' },
-  { agentID: 'Smith', action: 'LEFT' },
-  { agentID: 'Smith', action: 'RIGHT' },
-  { agentID: 'Smith', action: 'LEFT' },
-  { agentID: 'Smith', action: 'RIGHT' },
-  { agentID: 'Smith', action: 'LEFT' } ]
-[ [ 0, 0, 0, 0 ],
-  [ 0, 1, 1, -1 ],
-  [ 0, 1, 0, 0 ],
-  [ 0, 'X', 0, 1 ] ]
+Solucion usando busqueda por amplitud
+Es meta el nodo RDLDDRRRUULLRRDDLLUDRRUULULLDRDDLU nivel 34
 ```
   
   As we still having the -1 in the problem matrix, we assume that agent could not solve the given problem.
